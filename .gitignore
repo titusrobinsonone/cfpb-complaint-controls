@@ -1,0 +1,9 @@
+# raw data and anything built from it at row level stays local
+data/
+out/
+*.csv
+!reports/*.csv
+*.parquet
+*.pbix
+__pycache__/
+.pytest_cache/

@@ -1,0 +1,103 @@
+// Measures for the CFPB complaint controls dashboard.
+// Tables: fact_complaint, dim_date, dim_company, dim_product, dim_issue,
+// dim_channel, dim_response, dim_state, control_results, exceptions, param_as_of.
+// Put them all in one measure table called _Measures (see BUILD_GUIDE.md).
+
+// ---- Volume ----
+
+// One row in the fact table is one complaint.
+Complaints =
+COUNTROWS ( fact_complaint )
+
+// Closed means anything other than "In progress".
+Closed Complaints =
+CALCULATE ( [Complaints], fact_complaint[is_closed] = 1 )
+
+Open Complaints =
+CALCULATE ( [Complaints], fact_complaint[is_closed] = 0 )
+
+// ---- Timeliness (CTL-01) ----
+
+// Closed complaints that have a Yes/No timeliness flag.
+Closed With Flag =
+CALCULATE (
+    [Complaints],
+    fact_complaint[is_closed] = 1,
+    NOT ISBLANK ( fact_complaint[is_timely] )
+)
+
+Timely Responses =
+CALCULATE ( [Complaints], fact_complaint[is_closed] = 1, fact_complaint[is_timely] = 1 )
+
+// Share of closed complaints answered on time. DIVIDE returns blank, not an error, on zero.
+Timely % =
+DIVIDE ( [Timely Responses], [Closed With Flag] )
+
+// SIMULATED threshold, kept in one place so the dashboard and the Python agree.
+Timely Threshold =
+0.98
+
+Timely Below Threshold =
+IF ( [Closed With Flag] >= 30 && [Timely %] < [Timely Threshold], 1, 0 )
+
+// ---- Routing (CTL-03) ----
+
+// Median days between CFPB receiving a complaint and sending it to the bank.
+Median Days To Company =
+MEDIAN ( fact_complaint[days_to_company] )
+
+Avg Days To Company =
+AVERAGE ( fact_complaint[days_to_company] )
+
+// Complaints that took more than 14 days (SIMULATED) to reach the bank.
+Late To Company =
+CALCULATE ( [Complaints], fact_complaint[days_to_company] > 14 )
+
+Late To Company % =
+DIVIDE ( [Late To Company], [Complaints] )
+
+// ---- Month over month ----
+
+// Needs dim_date marked as the date table and a month on the visual.
+Complaints Prior Month =
+CALCULATE ( [Complaints], DATEADD ( dim_date[date], -1, MONTH ) )
+
+Complaints MoM Change =
+[Complaints] - [Complaints Prior Month]
+
+Complaints MoM % =
+DIVIDE ( [Complaints MoM Change], [Complaints Prior Month] )
+
+// ---- Exceptions (from the controls script) ----
+
+// Exceptions table is loaded from out/exceptions.csv. Not related to the fact table.
+Exceptions =
+COUNTROWS ( exceptions )
+
+Open Exceptions =
+CALCULATE ( [Exceptions], exceptions[remediation_status] = "open" )
+
+Exceptions On Simulated Thresholds =
+CALCULATE ( [Exceptions], exceptions[threshold_type] = "SIMULATED" )
+
+Controls Tested =
+COUNTROWS ( control_results )
+
+Controls With Exceptions =
+CALCULATE ( [Controls Tested], control_results[result] = "exceptions" )
+
+// ---- Aging (CTL-02) ----
+
+// Age of open complaints, counted to the extract date in param_as_of
+// (one-row table from out/param_as_of.csv, same date the Python uses).
+As Of Date =
+MAX ( param_as_of[as_of] )
+
+Open Over 60 Days =
+VAR AsOf = [As Of Date]
+RETURN
+    CALCULATE (
+        [Complaints],
+        fact_complaint[is_closed] = 0,
+        FILTER ( fact_complaint, AsOf - fact_complaint[date_received] > 60 )
+    )

@@ -1,0 +1,7 @@
+company_short,complaints,in_progress,median_days_to_company,timely_rate_pct,not_timely
+Capital One,67277,775,0.0,99.997,2
+JPMorgan Chase,50085,227,0.0,100.0,0
+Citibank,42657,333,0.0,99.998,1
+Bank of America,42373,1690,0.0,99.425,234
+Wells Fargo,41331,765,0.0,99.993,3
+Truist,10845,257,0.0,99.943,6

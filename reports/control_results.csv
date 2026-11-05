@@ -1,0 +1,9 @@
+control_id,control,threshold,threshold_type,population,exceptions,result,description
+CTL-01,Timely response rate by bank and month,>= 98%,SIMULATED,144,0,pass,Share of closed complaints with Timely response = Yes. Bank-months with fewer than 30 closed complaints are skipped.
+CTL-02,Complaints still in progress after 60 days,> 60 days open,fixed,4047,76,exceptions,"Age of each 'In progress' complaint, counted to the extract date. The 60 days comes from CFPB guidance."
+CTL-03,Routing lag from CFPB to bank,<= 5% routed after 14 days,SIMULATED,144,15,exceptions,"Days between Date received and Date sent to company, checked per bank and month."
+DQ-01,Duplicate complaint IDs,0,fixed,254568,0,pass,Duplicate IDs among in-scope rows.
+DQ-02,Sent to bank before it was received,0,fixed,254568,0,pass,Date sent earlier than date received.
+DQ-03,Missing or non-US state code,info only,fixed,254568,1,info,"Counted, not failed. Some consumers live abroad or leave the state blank."
+DQ-04,Closed complaint with no timeliness flag,0,fixed,250521,0,pass,Every closed complaint should have Timely response filled.
+MON-01,Monthly volume spike by bank and product,mean + 3 sd,SIMULATED,991,64,exceptions,Monthly count above the trailing 6-month mean plus 3 standard deviations. Series averaging under 10 a month are skipped.

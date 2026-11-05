@@ -1,0 +1,46 @@
+control_id,scope,exceptions
+CTL-02,Bank of America,26
+CTL-02,Capital One,17
+CTL-02,Citibank,13
+CTL-02,JPMorgan Chase,2
+CTL-02,Truist,5
+CTL-02,Wells Fargo,13
+CTL-03,Citibank,11
+CTL-03,Truist,3
+CTL-03,Wells Fargo,1
+MON-01,Bank of America / Checking or savings account,1
+MON-01,Bank of America / Credit card,3
+MON-01,Bank of America / Debt collection,2
+MON-01,"Bank of America / Money transfer, virtual currency, or money service",2
+MON-01,Bank of America / Vehicle loan or lease,1
+MON-01,Capital One / Checking or savings account,1
+MON-01,Capital One / Credit card,3
+MON-01,Capital One / Credit reporting or other personal consumer reports,1
+MON-01,Capital One / Debt collection,2
+MON-01,"Capital One / Money transfer, virtual currency, or money service",1
+MON-01,Capital One / Vehicle loan or lease,1
+MON-01,Citibank / Checking or savings account,2
+MON-01,Citibank / Credit card,3
+MON-01,Citibank / Credit reporting or other personal consumer reports,1
+MON-01,Citibank / Debt collection,3
+MON-01,JPMorgan Chase / Checking or savings account,1
+MON-01,JPMorgan Chase / Credit card,4
+MON-01,JPMorgan Chase / Credit reporting or other personal consumer reports,1
+MON-01,JPMorgan Chase / Debt collection,4
+MON-01,"JPMorgan Chase / Money transfer, virtual currency, or money service",1
+MON-01,JPMorgan Chase / Mortgage,1
+MON-01,JPMorgan Chase / Vehicle loan or lease,1
+MON-01,Truist / Checking or savings account,2
+MON-01,Truist / Credit card,1
+MON-01,Truist / Credit reporting or other personal consumer reports,2
+MON-01,Truist / Debt collection,1
+MON-01,"Truist / Money transfer, virtual currency, or money service",2
+MON-01,Truist / Mortgage,1
+MON-01,"Truist / Payday loan, title loan, personal loan, or advance loan",2
+MON-01,Truist / Vehicle loan or lease,1
+MON-01,Wells Fargo / Checking or savings account,2
+MON-01,Wells Fargo / Credit card,2
+MON-01,Wells Fargo / Credit reporting or other personal consumer reports,2
+MON-01,Wells Fargo / Debt collection,3
+MON-01,"Wells Fargo / Money transfer, virtual currency, or money service",2
+MON-01,Wells Fargo / Mortgage,1
