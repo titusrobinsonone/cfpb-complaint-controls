@@ -1,4 +1,5 @@
 Project Owner & Lead: Titus Robinson Yessaya
+
 AI Development Assistant: Claude (Anthropic)
 
 # CFPB complaint controls
